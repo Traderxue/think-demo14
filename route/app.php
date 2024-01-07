@@ -15,3 +15,27 @@ Route::get('think', function () {
 });
 
 Route::get('hello/:name', 'index/hello');
+
+
+//不需要token
+Route::group("/user",function(){
+
+    Route::post("/register","user/register");
+
+    Route::post("/login","user/login");
+
+});
+
+Route::group("/user",function(){
+
+    Route::post("/edit","user/edit");
+
+    Route::post("/disabled/:id","user/disabled");
+
+    Route::post("/enabled/:id","user/enabled");
+
+    Route::get("/page","user/page");
+
+})->middleware(app\middleware\JwtMiddleware::class);
+
+
