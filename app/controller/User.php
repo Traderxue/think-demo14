@@ -124,8 +124,8 @@ class User extends BaseController
     }
 
     public function page(Request $request){
-        $page = $request->param("page");
-        $pageSize = $request->param("pageSize");
+        $page = $request->param("page",1);
+        $pageSize = $request->param("pageSize",10);
         $keyword = $request->param("keyword");
 
         $list = UserModel::where("username","like","%{$keyword}%")->whereOr("nickname","like","%{$keyword}%")
