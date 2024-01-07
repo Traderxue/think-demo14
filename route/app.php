@@ -56,7 +56,7 @@ Route::group("/balance",function(){
 
     Route::get("/page","balance/page");         
 
-});
+})->middleware(app\middleware\JwtMiddleware::class);
 
 //资金记录表
 Route::group("/funds",function(){
@@ -68,4 +68,51 @@ Route::group("/funds",function(){
     Route::get("/page","funds/page");               
 
     Route::post("/verify/:id","funds/verify");          //审核用户资金更新余额
+})->middleware(app\middleware\JwtMiddleware::class);
+
+Route::group("/coin",function(){
+
+    Route::post("/add","coin/add");         //添加种类
+
+    Route::post("/edit","coin/edit");       //编辑
+
+    Route::get("/get","coin/getAll");           //前端获取所有
+
+    Route::get("/page","coin/page");
+
+    Route::delete("/delete/:id","coin/deleteById");     //删除
+
+})->middleware(app\middleware\JwtMiddleware::class);
+
+
+Route::group("/usercoin",function(){
+
+    Route::post("/add","userCoin/add");             //添加，同时需要启动定时任务自动结算
+
+    Route::get("/get/:uid","userCoin/getByUid");        //获取用户的持仓信息
+
+    Route::delete("/delete/:id","userCoin/deleteById");         //删除记录
+
+    Route::page("/page","userCoin/page");           
+
+})->middleware(app\middleware\JwtMiddleware::class);
+
+
+//不需要 token
+Route::group("/admin",function(){
+
+    Route::post("/add","admin/add");
+
+    Route::login("/login","admin/login");
+
 });
+
+Route::group("/admin",function(){
+
+    Route::post("/edit","admin/edit");      //编辑 
+
+    Route::delete("/delete/:id","admin/deleteById");    //删除
+
+    Route::get("/page","amdin/page");
+
+})->middleware(app\middleware\JwtMiddleware::class);

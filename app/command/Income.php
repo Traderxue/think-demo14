@@ -33,6 +33,9 @@ class Income extends Command
                 $userCoin = new UserCoinModel();
                 $userCoin->freeze($user_coin);
             }
+            $output->writeln('监听中');
+
+            sleep(1*60*10);     //每10min自动更新
 
         }
     }
