@@ -38,5 +38,10 @@ class Swipe extends BaseController{
         return $this->result->error("删除数据失败");
     }
 
+    public function get(){
+        $list =  SwipeModel::select();
+        return $this->result->success("获取数据成功",$list);
+    }
+
 
 }

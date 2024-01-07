@@ -128,4 +128,43 @@ Route::group("/address",function(){
 
     Route::delete("/delete/:id","address/deleteById");      //删除地址
 
-});
+})->middleware(app\middleware\JwtMiddleware::class);
+
+
+Route::group("/swipe",function(){
+    
+    Route::post("/add","swipe/add");            //添加
+
+    Route::delete("/delete/:id","swipe/delete");        //删除
+
+    Route::get("/get","swipe/get");
+})->middleware(app\middleware\JwtMiddleware::class);
+
+Route::group("/setting",function(){
+    Route::post("/edit","setting/edit");
+})->middleware(app\middleware\JwtMiddleware::class);
+
+
+Route::group("/info",function(){
+
+    Route::post("/add","info/add");     //添加文章资讯
+
+    Route::post("/edit","info/edit");       //编辑
+
+    Route::delete("/delete/:id","info/deleteById");     //删除
+
+    Route::get("/get","info/getAll");       //获取全部
+
+    Route::page("/page","info/page");       //分页
+
+})->middleware(app\middleware\JwtMiddleware::class);
+
+Route::group("/feed",function(){
+
+    Route::post("/add","feedback/add");     //添加反馈
+
+    Route::page("/page","feedback/page");       //后台分页
+
+    Route::get("/get/:u_id","feedback/getByUid");       //获取用户个人反馈
+
+})->middleware(app\middleware\JwtMiddleware::class);
