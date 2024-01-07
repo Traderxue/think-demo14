@@ -30,9 +30,16 @@ class UserCoin  extends BaseController{
             "num"=>$post["num"],
             "expected_income"=>(float)$post["num"] * (float)$coin->rate
         ]);
-    }
 
-    function finish(Request $request){
-        
+        $res = $user_coin->save();
+        if($res){
+            //将用户余额冻结
+            $userCoin = new UserCoinModel();
+
+            $userCoin->freeze($user_coin);
+            
+            return $this->result->success("添加数据成功",$res);
+        }
+        return $this->result->error("添加数据失败");
     }
 }
