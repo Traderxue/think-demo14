@@ -1,0 +1,39 @@
+<?php
+declare (strict_types = 1);
+
+namespace app\command;
+
+use think\console\Command;
+use think\console\Input;
+use think\console\input\Argument;
+use think\console\input\Option;
+use think\console\Output;
+use app\model\UserCoin as UserCoinModel;
+
+class Income extends Command
+{
+    protected function configure()
+    {
+        // 指令配置
+        $this->setName('income')
+            ->setDescription('the income command');
+    }
+
+    protected function execute(Input $input, Output $output)
+    {
+        // 指令输出
+        $output->writeln('income');
+
+        while (true) {
+             // 获取需要结算的用户币种记录
+             $userCoins = UserCoinModel::where('finish_time', '<=', date('Y-m-d H:i:s'))->select();
+
+             foreach ($userCoins as $userCoin) {
+                // 进行收益结算逻辑，更新用户收益等信息
+                // ...
+                // 调用model进行结算
+            }
+
+        }
+    }
+}
