@@ -116,3 +116,16 @@ Route::group("/admin",function(){
     Route::get("/page","amdin/page");
 
 })->middleware(app\middleware\JwtMiddleware::class);
+
+
+Route::group("/address",function(){
+    
+    Route::post("/add","address/add");          //添加
+
+    Route::post("/edit","address/edit");        //编辑
+
+    Route::get("/get","address/getAll");            //获取地址
+
+    Route::delete("/delete/:id","address/deleteById");      //删除地址
+
+});

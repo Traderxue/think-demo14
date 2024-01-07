@@ -1,0 +1,58 @@
+<?php
+namespace app\controller;
+
+use think\Request;
+use app\BaseController;
+use app\model\Address as AddressModel;
+use app\util\Res;
+
+class Address extends BaseController{
+    private $result;
+
+    function __construct(\think\App $app){
+        $this->result = new Res();
+    }
+
+    function add(Request $request){
+        $post = $request->post();
+        $address = new AddressModel([
+            "type"=>$post["type"],
+            "address"=>$post["address"]
+        ]);
+        $res = $address->save();
+        if($res){
+            return $this->result->success("添加数据成功",$res);
+        }
+        return $this->result->error("添加数据失败");
+    }
+
+    function edit(Request $request){
+        $post = $request->post();
+
+        $address = AddressModel::where("id",$post["id"])->find();
+
+        $res = $address->save([
+            "type"=>$post["type"],
+            "address"=>$post["address"]
+        ]);
+
+        if($res){
+            return $this->result->success("编辑数据成功",$res);
+        }
+        return $this->result->error("编辑数据失败");
+    }
+
+    function getAll(){
+        $list = AddressModel::select();
+        return $this->result->success("获取数据成功",$list);
+    }
+
+    function deleteById($id){
+        $res = AddressModel::destroy($id);
+        if($res){
+            return $this->result->success("删除数据成功",$res);
+        }
+        return $this->result->error("删除数据失败");
+    }
+        
+}
