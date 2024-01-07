@@ -58,6 +58,10 @@ class User extends BaseController
             return $this->result->error("用户不存在");
         }
 
+        if($user->disabled==1){
+            return $this->result->error("账户被封禁");
+        }
+
         if (password_verify($post["password"], $user->password)) {
             $secretKey = '123456789'; // 用于签名令牌的密钥，请更改为安全的密钥
 
